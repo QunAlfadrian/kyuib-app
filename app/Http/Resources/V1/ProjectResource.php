@@ -32,7 +32,7 @@ class ProjectResource extends JsonResource {
             ],
             'links' => [
                 'self' => route('projects.show', $this->id()),
-                'related' => route('proejcts.show', $this->slug())
+                'related' => route('projects.show', $this->slug())
             ]
         ];
     }

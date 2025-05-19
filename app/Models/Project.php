@@ -22,13 +22,18 @@ class Project extends Model {
         'slug',
         'description',
         'start_date',
-        'finish_date'
+        'finish_date',
+        'owner_id'
     ];
 
     protected $casts = [
         'start_date' => 'datetime',
         'finish_date' => 'datetime'
     ];
+
+    public function id(): string {
+        return (string) $this->id;
+    }
 
     public function title(): string {
         return $this->title;

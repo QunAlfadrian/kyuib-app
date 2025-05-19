@@ -1,12 +1,18 @@
 <?php
 
+use App\Http\Controllers\API\V1\OwnerController;
+use App\Http\Controllers\API\V1\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
-});
+// https://kyuib.my.id/api/v1
+Route::group([
+    'prefix' => 'v1',
+    'middleware' => 'auth:sanctum'
+], function () {
+    // Projects
+    Route::apiResource('/projects', ProjectController::class);
 
-Route::get('/', function () {
-    return ['Laravel' => app()->version()];
+    // Owners
+    Route::get('/owners/{user}', [OwnerController::class, 'show'])->name('owners');
 });
