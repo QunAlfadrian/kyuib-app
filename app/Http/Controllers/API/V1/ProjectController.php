@@ -32,7 +32,7 @@ class ProjectController extends Controller {
             'title' => $request->input('title'),
             'slug' => Str::slug($request->input('title')),
             'description' => $request->input('description'),
-            'owner_id' => auth()->id() ?? 1
+            'owner_id' => auth()->id()
         ]);
 
         return (new ProjectResource($project))

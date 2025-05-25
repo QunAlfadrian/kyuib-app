@@ -17,12 +17,13 @@ class ArticleFactory extends Factory {
      */
     public function definition(): array {
         $title = $this->faker->sentence();
-
+        $project = $attribute['project_id'] ?? Project::factory()->create();
         return [
             'title' => $title,
             'slug' => Str::slug($title),
             'body' => $this->faker->paragraph(),
-            'project_id' => $attribute['project_id'] ?? Project::factory()
+            'project_id' => $project,
+            'author_id' => $attribute['author_id'] ?? $project->owner()->id()
         ];
     }
 }

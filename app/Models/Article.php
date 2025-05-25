@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasAuthor;
 use App\Traits\HasProject;
 use App\Traits\ModelHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +12,7 @@ class Article extends Model {
     use HasFactory;
     use ModelHelpers;
     use HasProject;
+    use HasAuthor;
 
     const TABLE = 'articles';
     protected $table = self::TABLE;
@@ -19,6 +21,7 @@ class Article extends Model {
         'title',
         'slug',
         'body',
+        'project_id',
         'author_id'
     ];
 

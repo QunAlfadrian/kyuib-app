@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -20,6 +21,12 @@ class RouteServiceProvider extends ServiceProvider {
         // Custom model binding
         Route::bind('article', function ($value) {
             return Article::where('id', $value)
+                ->orWhere('slug', $value)
+                ->firstOrFail();
+        });
+
+        Route::bind('project', function ($value) {
+            return Project::where('id', $value)
                 ->orWhere('slug', $value)
                 ->firstOrFail();
         });
