@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->timestamp('start_date')->nullable();
             $table->timestamp('finish_date')->nullable();
             $table->foreignId('owner_id')->constrained('users');
+            $table->foreignId('category_id')->constrained('categories');
             $table->timestamps();
         });
     }

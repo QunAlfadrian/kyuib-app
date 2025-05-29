@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Category;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Project>
@@ -23,7 +24,8 @@ class ProjectFactory extends Factory {
             'slug' => Str::slug($title),
             'description' => $this->faker->paragraph(),
             'start_date' => $this->faker->dateTime('now'),
-            'owner_id' => $attribute['owner_id'] ?? User::factory()
+            'owner_id' => $attribute['owner_id'] ?? User::factory(),
+            'category_id' => $attribute['category_id'] ?? Category::factory()
         ];
     }
 }

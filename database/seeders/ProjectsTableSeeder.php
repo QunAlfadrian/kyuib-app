@@ -11,6 +11,9 @@ class ProjectsTableSeeder extends Seeder {
      * Run the database seeds.
      */
     public function run(): void {
-        $project = Project::factory()->count(5)->create(['owner_id' => 1]);
+        $project = Project::factory()->count(5)->create([
+            'owner_id' => 1,
+            'category_id' => 1
+        ]);
     }
 }

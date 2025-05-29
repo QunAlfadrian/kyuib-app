@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasCategory;
 use App\Traits\HasOwner;
 use App\Traits\ModelHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,7 @@ class Project extends Model {
     use HasFactory;
     use ModelHelpers;
     use HasOwner;
+    use HasCategory;
 
     const TABLE = 'projects';
 
@@ -23,7 +25,8 @@ class Project extends Model {
         'description',
         'start_date',
         'finish_date',
-        'owner_id'
+        'owner_id',
+        'category_id'
     ];
 
     protected $casts = [

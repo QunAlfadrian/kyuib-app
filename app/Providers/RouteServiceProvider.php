@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Article;
 use App\Models\Project;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -27,6 +28,12 @@ class RouteServiceProvider extends ServiceProvider {
 
         Route::bind('project', function ($value) {
             return Project::where('id', $value)
+                ->orWhere('slug', $value)
+                ->firstOrFail();
+        });
+
+        Route::bind('category', function ($value) {
+            return Category::where('id', $value)
                 ->orWhere('slug', $value)
                 ->firstOrFail();
         });
