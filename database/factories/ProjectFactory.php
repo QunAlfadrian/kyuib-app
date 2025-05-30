@@ -22,6 +22,7 @@ class ProjectFactory extends Factory {
         return [
             'title' => $title,
             'slug' => Str::slug($title),
+            'hero_image_url' => 'https://arkwaifu.cc/api/v1/arts/pic_rogue_1_16/variants/origin/content',
             'description' => $this->faker->paragraph(),
             'start_date' => $this->faker->dateTime('now'),
             'owner_id' => $attribute['owner_id'] ?? User::factory(),

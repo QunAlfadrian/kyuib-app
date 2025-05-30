@@ -39,14 +39,36 @@ Route::group([
     Route::get('/user', UserController::class);
 
     // Categories
-    Route::apiResource('/categories', CategoryController::class);
-
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    
     // Projects
-    Route::apiResource('/projects', ProjectController::class);
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+    Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
     // Articles
-    Route::apiResource('/articles', ArticleController::class);
+    Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
+    Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+    Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 
     // Owners
     Route::get('/owners/{user}', [OwnerController::class, 'show'])->name('owners');
+});
+
+Route::group([
+    'prefix' => 'v1'
+], function () {
+    // Categories
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+
+    // Projects
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+
+    // Articles
+    Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+    Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
 });

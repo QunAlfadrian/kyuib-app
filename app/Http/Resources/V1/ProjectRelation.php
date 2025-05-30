@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\V1;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ArticleResource extends JsonResource {
+class ProjectRelation extends JsonResource {
     /**
      * Transform the resource into an array.
      *
@@ -14,21 +14,15 @@ class ArticleResource extends JsonResource {
      */
     public function toArray(Request $request): array {
         return [
-            'type' => 'article',
+            'type' => 'project',
             'id' => $this->id(),
             'attributes' => [
                 'title' => $this->title(),
-                'slug' => $this->slug(),
-                'body' => $this->body(),
-                'created_at' => $this->created_at
-            ],
-            'relationships' => [
-                'author' => UserResource::make($this->author()),
-                'project' => ProjectRelation::make($this->project())
+                'start_date' => $this->startDate()
             ],
             'links' => [
-                'self' => route('articles.show', $this->id()),
-                'related' => route('articles.show', $this->slug())
+                'self' => route('projects.show', $this->id()),
+                'related' => route('projects.show', $this->slug())
             ]
         ];
     }

@@ -2,12 +2,13 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Http\Resources\CategoryResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProjectResource extends JsonResource {
-    public static $wrap = 'projects';
+    // public static $wrap = 'projects';
 
     /**
      * Transform the resource into an array.
@@ -22,13 +23,15 @@ class ProjectResource extends JsonResource {
             'attributes' => [
                 'title' => $this->title(),
                 'slug' => $this->slug(),
+                'hero_image_url' => $this->heroImageUrl(),
                 'description' => $this->description(),
                 'start_date' => $this->startDate(),
                 'finish_date' => $this->finishDate(),
                 'created_at' => $this->created_at
             ],
             'relationships' => [
-                'owner' => OwnerResource::make($this->owner())
+                'owner' => OwnerResource::make($this->owner()),
+                'articles' => ArticleRelation::collection($this->articles)
             ],
             'links' => [
                 'self' => route('projects.show', $this->id()),

@@ -9,13 +9,8 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('project_images', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug');
-            $table->text('body');
-            $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete();
-            $table->foreignId('author_id')->constrained('users');
             $table->timestamps();
         });
     }
@@ -24,6 +19,6 @@ return new class extends Migration {
      * Reverse the migrations.
      */
     public function down(): void {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('project_images');
     }
 };

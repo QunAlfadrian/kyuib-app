@@ -7,9 +7,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\CategoryCollection;
-use App\Http\Resources\V1\ProjectResource;
+use App\Http\Resources\V1\CategoryResource;
+use App\Http\Resources\V1\CategoryCollection;
 
 class CategoryController extends Controller {
     /**

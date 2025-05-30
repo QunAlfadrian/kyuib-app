@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\V1;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,6 +19,9 @@ class CategoryResource extends JsonResource {
             'attributes' => [
                 'name' => $this->name(),
                 'slug' => $this->slug()
+            ],
+            'relationships' => [
+                'projects' => ProjectRelation::collection($this->projects)
             ],
             'links' => [
                 'self' => route('categories.show', $this->id()),

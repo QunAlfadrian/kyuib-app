@@ -22,6 +22,7 @@ class Project extends Model {
     protected $fillable = [
         'title',
         'slug',
+        'hero_image_url',
         'description',
         'start_date',
         'finish_date',
@@ -44,6 +45,10 @@ class Project extends Model {
 
     public function slug(): string {
         return $this->slug;
+    }
+
+    public function heroImageUrl(): string {
+        return $this->hero_image_url;
     }
 
     public function description(): string {
