@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ProjectResource;
 use App\Http\Resources\V1\ProjectCollection;
+use App\Models\Category;
 
 class ProjectController extends Controller {
     /**
      * Display a listing of the resource.
      */
     public function index() {
-        return new ProjectCollection(Project::all());
+        return new ProjectCollection(Project::paginate(10));
     }
 
     /**

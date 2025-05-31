@@ -37,6 +37,10 @@ class Article extends Model {
         return $this->slug;
     }
 
+    public function heroImageUrl(): string {
+        return $this->hero_image_url;
+    }
+
     public function body(): string {
         return $this->body;
     }

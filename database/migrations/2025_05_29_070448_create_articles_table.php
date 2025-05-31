@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('slug');
+            $table->text('hero_image_url', 2048);
             $table->text('body');
             $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete();
             $table->foreignId('author_id')->constrained('users');

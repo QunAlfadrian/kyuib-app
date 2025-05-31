@@ -16,7 +16,7 @@ class ArticleController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
-        return new ArticleCollection(Article::all());
+        return new ArticleCollection(Article::paginate(10));
     }
 
     /**

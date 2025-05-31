@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\V1;
 
-use App\Http\Resources\CategoryResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -31,7 +30,13 @@ class ProjectResource extends JsonResource {
             ],
             'relationships' => [
                 'owner' => OwnerResource::make($this->owner()),
-                'articles' => ArticleRelation::collection($this->articles)
+                'category' => CategoryRelation::make($this->category()),
+                'articles' => [
+                    'links' => [
+                        'self' => route('projects.relationships.articles', $this->slug()),
+                        'related' => route('projects.articles', $this->slug())
+                    ]
+                ],
             ],
             'links' => [
                 'self' => route('projects.show', $this->id()),

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\API\V1\ArticleController;
 use App\Http\Controllers\API\V1\CategoryController;
+use App\Http\Controllers\API\V1\CategoryRelationshipController;
 use App\Http\Controllers\API\V1\OwnerController;
 use App\Http\Controllers\API\V1\ProjectController;
+use App\Http\Controllers\API\V1\ProjectRelationshipController;
 use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +44,7 @@ Route::group([
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-    
+
     // Projects
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
     Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
@@ -54,7 +56,7 @@ Route::group([
     Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 
     // Owners
-    Route::get('/owners/{user}', [OwnerController::class, 'show'])->name('owners');
+    Route::get('/users/{user:name}', [OwnerController::class, 'show'])->name('users.show');
 });
 
 Route::group([
@@ -62,11 +64,15 @@ Route::group([
 ], function () {
     // Categories
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-    Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/categories/{category}/relationships/projects', [CategoryRelationshipController::class, 'relationshipProjects'])->name('categories.relationships.projects');
+    Route::get('/categories/{category}/projects', [CategoryRelationshipController::class, 'relatedProjects'])->name('categories.projects');
 
     // Projects
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/projects/{project}/relationships/articles', [ProjectRelationshipController::class, 'relationshipArticles'])->name('projects.relationships.articles');
+    Route::get('/projects/{project}/articles', [ProjectRelationshipController::class, 'relatedArticles'])->name('projects.articles');
 
     // Articles
     Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');

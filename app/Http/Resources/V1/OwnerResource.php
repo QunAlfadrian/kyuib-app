@@ -17,7 +17,7 @@ class OwnerResource extends JsonResource {
             'id' => $this->id(),
             'name' => $this->name(),
             'links' => [
-                'self' => route('owners', $this->id)
+                'self' => route('users.show', $this->name())
             ],
         ];
     }

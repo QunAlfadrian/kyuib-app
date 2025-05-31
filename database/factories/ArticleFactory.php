@@ -17,10 +17,11 @@ class ArticleFactory extends Factory {
      */
     public function definition(): array {
         $title = $this->faker->sentence();
-        
+
         return [
             'title' => $title,
             'slug' => Str::slug($title),
+            'hero_image_url' => 'https://arkwaifu.cc/api/v1/arts/pic_rogue_2_6/variants/origin/content',
             'body' => $this->faker->paragraph(),
             'project_id' => $attribute['project_id'] ?? 1,
             'author_id' => $attribute['author_id'] ?? 1

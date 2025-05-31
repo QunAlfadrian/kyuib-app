@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\V1;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource {
+class CategoryRelation extends JsonResource {
     /**
      * Transform the resource into an array.
      *
@@ -16,18 +16,7 @@ class CategoryResource extends JsonResource {
         return [
             'type' => 'category',
             'id' => $this->id(),
-            'attributes' => [
-                'name' => $this->name(),
-                'slug' => $this->slug()
-            ],
-            'relationships' => [
-                'projects' => [
-                    'links' => [
-                        'self' => route('categories.relationships.projects', $this->slug()),
-                        'related' => route('categories.projects', $this->slug())
-                    ]
-                ],
-            ],
+            'name' => $this->name(),
             'links' => [
                 'self' => route('categories.show', $this->id()),
                 'related' => route('categories.show', $this->slug())

@@ -18,7 +18,8 @@ class ProjectRelation extends JsonResource {
             'id' => $this->id(),
             'attributes' => [
                 'title' => $this->title(),
-                'start_date' => $this->startDate()
+                'hero_image_url' => $this->heroImageUrl(),
+                'start_date' => $this->startDate(),
             ],
             'links' => [
                 'self' => route('projects.show', $this->id()),
