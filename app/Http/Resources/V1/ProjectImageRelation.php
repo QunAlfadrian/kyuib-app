@@ -3,10 +3,10 @@
 namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ArticleRelation extends JsonResource {
+class ProjectImageRelation extends JsonResource {
     /**
      * Transform the resource into an array.
      *
@@ -14,19 +14,25 @@ class ArticleRelation extends JsonResource {
      */
     public function toArray(Request $request): array {
         return [
-            'type' => 'articles',
+            'type' => 'project-images',
             'id' => $this->id(),
             'attributes' => [
-                'title' => $this->title(),
-                'hero_image_url' => $this->heroImageUrl(),
-                'created_at' => $this->created_at
+                'name' => $this->name(),
+                'url' => $this->url()
             ],
             'links' => [
-                'self' => route('articles.show', $this->id()),
-                'related' => route('articles.show', $this->slug())
+                'self' => route('projects.images.show', [
+                    'project' => $this->project()->slug(),
+                    'projectImage' => $this->id()
+                ]),
+                'related' => route('projects.images.show', [
+                    'project' => $this->project()->slug(),
+                    'projectImage' => $this->slug()
+                ]),
             ]
         ];
     }
+
 
     public function with($request) {
         return [

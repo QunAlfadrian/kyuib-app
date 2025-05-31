@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Article;
 use App\Models\Project;
 use App\Models\Category;
+use App\Models\ProjectImage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -40,6 +41,12 @@ class AppServiceProvider extends ServiceProvider {
 
         Route::bind('category', function ($value) {
             return Category::where('slug', $value)
+                ->orWhere('id', is_numeric($value) ? $value : null)
+                ->firstOrFail();
+        });
+
+        Route::bind('projectImage', function ($value) {
+            return ProjectImage::where('slug', $value)
                 ->orWhere('id', is_numeric($value) ? $value : null)
                 ->firstOrFail();
         });

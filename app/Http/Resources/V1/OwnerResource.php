@@ -13,7 +13,7 @@ class OwnerResource extends JsonResource {
      */
     public function toArray(Request $request): array {
         return [
-            'type' => 'user',
+            'type' => 'users',
             'id' => $this->id(),
             'name' => $this->name(),
             'links' => [

@@ -11,6 +11,12 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('project_images', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 255);
+            $table->string('slug');
+            $table->string('alternative_text', 255);
+            $table->text('filename');
+            $table->text('url');
+            $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete();
             $table->timestamps();
         });
     }

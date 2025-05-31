@@ -66,4 +66,8 @@ class Project extends Model {
     public function articles(): HasMany {
         return $this->hasMany(Article::class);
     }
+
+    public function images(): HasMany {
+        return $this->hasMany(ProjectImage::class);
+    }
 }

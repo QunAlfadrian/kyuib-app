@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\API\V1\ArticleController;
-use App\Http\Controllers\API\V1\CategoryController;
-use App\Http\Controllers\API\V1\CategoryRelationshipController;
-use App\Http\Controllers\API\V1\OwnerController;
-use App\Http\Controllers\API\V1\ProjectController;
-use App\Http\Controllers\API\V1\ProjectRelationshipController;
-use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\V1\UserController;
+use App\Http\Controllers\API\V1\OwnerController;
+use App\Http\Controllers\API\V1\ArticleController;
+use App\Http\Controllers\API\V1\ProjectController;
+use App\Http\Controllers\API\V1\CategoryController;
+use App\Http\Controllers\API\V1\ProjectRelationshipController;
+use App\Http\Controllers\API\V1\CategoryRelationshipController;
+use App\Http\Controllers\API\V1\ProjectImageController;
 
 Route::group([], function () {
     Route::get('/', function () {
@@ -50,6 +51,10 @@ Route::group([
     Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
+    // ProjectImages
+    Route::post('/projects/{project}/images', [ProjectImageController::class, 'store'])->name('projects.images.store');
+    Route::delete('/projects/{project}/images/{projectImage}', [ProjectImageController::class, 'destroy'])->name('projects.images.destroy');
+
     // Articles
     Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
     Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
@@ -73,6 +78,8 @@ Route::group([
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
     Route::get('/projects/{project}/relationships/articles', [ProjectRelationshipController::class, 'relationshipArticles'])->name('projects.relationships.articles');
     Route::get('/projects/{project}/articles', [ProjectRelationshipController::class, 'relatedArticles'])->name('projects.articles');
+    Route::get('/projects/{project}/images', [ProjectRelationshipController::class, 'relatedImages'])->name('projects.images.index');
+    Route::get('/projects/{project}/images/{projectImage}', [ProjectImageController::class, 'show'])->name('projects.images.show');
 
     // Articles
     Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');

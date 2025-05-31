@@ -14,7 +14,7 @@ class ProjectIdentifier extends JsonResource {
      */
     public function toArray(Request $request): array {
         return [
-            'type' => 'project',
+            'type' => 'projects',
             'id' => $this->id()
         ];
     }
