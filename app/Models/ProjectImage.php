@@ -28,7 +28,7 @@ class ProjectImage extends Model {
 
     protected static function booted() {
         static::deleting(function ($image) {
-            Storage::disk('public')->delete("images/{$image->filename()}");
+            Storage::disk('public')->delete("images/projects/{$image->filename()}");
         });
     }
 

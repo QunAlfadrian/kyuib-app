@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->text('slug');
             $table->text('hero_image_url', 2048);
             $table->text('description');
+            $table->text('redirect_url', 2048);
             $table->timestamp('start_date')->nullable();
             $table->timestamp('finish_date')->nullable();
             $table->foreignId('owner_id')->constrained('users');

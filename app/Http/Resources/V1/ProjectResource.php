@@ -24,6 +24,7 @@ class ProjectResource extends JsonResource {
                 'slug' => $this->slug(),
                 'hero_image_url' => $this->heroImageUrl(),
                 'description' => $this->description(),
+                'redirect_url' => $this->redirectUrl(),
                 'start_date' => $this->startDate(),
                 'finish_date' => $this->finishDate(),
                 'created_at' => $this->created_at

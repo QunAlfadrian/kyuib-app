@@ -24,6 +24,7 @@ class ProjectFactory extends Factory {
             'slug' => Str::slug($title),
             'hero_image_url' => 'https://arkwaifu.cc/api/v1/arts/pic_rogue_1_16/variants/origin/content',
             'description' => $this->faker->paragraph(),
+            'redirect_url' => 'https://github.com/QunAlfadrian',
             'start_date' => $this->faker->dateTime('now'),
             'owner_id' => $attribute['owner_id'] ?? User::factory(),
             'category_id' => $attribute['category_id'] ?? Category::factory()

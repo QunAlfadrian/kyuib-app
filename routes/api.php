@@ -10,6 +10,7 @@ use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\ProjectRelationshipController;
 use App\Http\Controllers\API\V1\CategoryRelationshipController;
 use App\Http\Controllers\API\V1\ProjectImageController;
+use App\Http\Controllers\LandingPageController;
 
 Route::group([], function () {
     Route::get('/', function () {
@@ -41,6 +42,10 @@ Route::group([
     // User
     Route::get('/user', UserController::class);
 
+    // Landing Page Settings
+    Route::post('/landing-pages', [LandingPageController::class, 'store'])->name('landingPages.store');
+    Route::put('/landing-pages/{landingPageSettings}', [LandingPageController::class, 'update'])->name('landingPages.update');
+
     // Categories
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
@@ -67,6 +72,9 @@ Route::group([
 Route::group([
     'prefix' => 'v1'
 ], function () {
+    // Landing Page Settings
+    Route::get('/landing-pages/{landingPageSettings}', [LandingPageController::class, 'show'])->name('landingPages.show');
+
     // Categories
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])->name('categories.show');

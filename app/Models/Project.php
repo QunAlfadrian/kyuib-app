@@ -24,6 +24,7 @@ class Project extends Model {
         'slug',
         'hero_image_url',
         'description',
+        'redirect_url',
         'start_date',
         'finish_date',
         'owner_id',
@@ -53,6 +54,10 @@ class Project extends Model {
 
     public function description(): string {
         return $this->description;
+    }
+
+    public function redirectUrl(): string {
+        return $this->redirectUrl;
     }
 
     public function startDate(): string {

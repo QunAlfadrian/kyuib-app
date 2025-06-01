@@ -7,12 +7,13 @@ use Illuminate\Support\Str;
 use App\Models\ProjectImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Drivers\Gd\Driver;
 use App\Http\Resources\V1\ProjectImageResource;
+use App\Services\V1\ImageService;
 
 class ProjectImageController extends Controller {
+    public function __construct(private ImageService $imageService) {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -33,17 +34,20 @@ class ProjectImageController extends Controller {
         $slug = Str::slug($request->input('name'));
         $image = $request->file('image');
         $filename = $slug . "-" . time() . ".webp";
+        $path = 'images/projects/gallery/';
 
-        $manager = new ImageManager(new Driver());
-        $webp = $manager->read($image)->toWebp(60);
-        Storage::disk('public')->put('images/' . $filename, $webp);
+        $this->imageService->StoreImage(
+            $image,
+            $filename,
+            $path
+        );
 
         $projectImage = $project->images()->create([
             'name' => $request->input('name'),
             'slug' => $slug,
             'alternative_text' => $request->input('alternative_text'),
             'filename' => $filename,
-            'url' => asset(Storage::url('images/' . $filename))
+            'url' => asset(Storage::url($path . $filename))
         ]);
 
         return (new ProjectImageResource($projectImage))
