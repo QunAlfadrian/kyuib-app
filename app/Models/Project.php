@@ -57,7 +57,7 @@ class Project extends Model {
     }
 
     public function redirectUrl(): string {
-        return $this->redirectUrl;
+        return $this->redirect_url;
     }
 
     public function startDate(): string {

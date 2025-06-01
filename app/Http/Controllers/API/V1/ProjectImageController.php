@@ -34,7 +34,7 @@ class ProjectImageController extends Controller {
         $slug = Str::slug($request->input('name'));
         $image = $request->file('image');
         $filename = $slug . "-" . time() . ".webp";
-        $path = 'images/projects/gallery/';
+        $path = 'images/projects/' . $project->slug() . '/' . 'gallery/';
 
         $this->imageService->StoreImage(
             $image,
@@ -68,6 +68,9 @@ class ProjectImageController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(Project $project, ProjectImage $projectImage) {
+        $path = str_replace(asset('storage') . '/', '', $projectImage->url());
+        Storage::disk('public')->delete($path);
+
         $projectImage->delete();
 
         return response()->json(null, 204);

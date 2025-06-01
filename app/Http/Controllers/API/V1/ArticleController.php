@@ -7,11 +7,16 @@ use App\Models\Project;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Services\V1\ImageService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\V1\ArticleResource;
 use App\Http\Resources\V1\ArticleCollection;
 
 class ArticleController extends Controller {
+    public function __construct(private ImageService $imageService) {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -25,18 +30,32 @@ class ArticleController extends Controller {
     public function store(Request $request) {
         $request->validate([
             'title' => 'bail|required|string|max:127|unique:articles,title',
+            'hero_image' => 'bail|required|image|max:5048',
             'body' => 'bail|required|string|min:5',
             'project_id' => 'bail|required|integer',
         ]);
 
+        $slug = Str::slug($request->input('title'));
+        $image = $request->file('hero_image');
+        $filename = $slug . "-hero-" . time() . ".webp";
+        $path = 'images/articles/';
+
+        $this->imageService->StoreImage(
+            $image,
+            $filename,
+            $path,
+            100
+        );
+
         $project = Project::find($request->input('project_id'));
-        $article = Article::create([
+        $article = $project->articles()->create([
             'title' => $request->input('title'),
-            'slug' => Str::slug($request->input('title')),
+            'slug' => $slug,
+            'hero_image_url' => asset(Storage::url($path.$filename)),
             'body' => $request->input('body'),
-            'project_id' => $request->input('project_id'),
             'author_id' => $project->owner()->id()
         ]);
+        $article->authorRelation()->associate(Auth::user());
 
         return (new ArticleResource($article))
             ->response()
@@ -57,15 +76,40 @@ class ArticleController extends Controller {
      */
     public function update(Request $request, Article $article) {
         $request->validate([
-            'title' => ['sometimes', 'max:127', Rule::unique('projects', 'title')->ignore($article->id)],
+            'title' => ['sometimes', 'max:127', Rule::unique('articles', 'title')->ignore($article->id)],
+            'hero_image' => 'bail|nullable|image|max:5048',
             'body' => 'bail|required|string|min:5',
         ]);
 
-        $article->update([
-            'title' => $request->input('title'),
-            'slug' => Str::slug($request->input('title')),
-            'body' => $request->input('body'),
+        $data = $request->only([
+            'title',
+            'body'
         ]);
+
+        $slug = Str::slug($request->input('title'));
+        if ($request->hasFile('hero_image')) {
+            // delete old hero image
+            if ($article->heroImageUrl()) {
+                $oldPath = str_replace(asset('storage') . '/', '', $article->heroImageUrl());
+                Storage::disk('public')->delete($oldPath);
+            }
+
+            $image = $request->file('hero_image');
+            $filename = $slug . "-hero-" . time() . ".webp";
+            $path = 'images/articles/';
+
+            $this->imageService->StoreImage(
+                $image,
+                $filename,
+                $path,
+                100
+            );
+
+            $data['hero_image_url'] = asset(Storage::url($path . $filename));
+        }
+        $data['slug'] = $slug;
+
+        $article->update($data);
 
         return (new ArticleResource($article))
             ->response()

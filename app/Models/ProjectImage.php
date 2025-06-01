@@ -26,12 +26,6 @@ class ProjectImage extends Model {
         'project_id'
     ];
 
-    protected static function booted() {
-        static::deleting(function ($image) {
-            Storage::disk('public')->delete("images/projects/{$image->filename()}");
-        });
-    }
-
     public function id(): string {
         return (string) $this->id;
     }

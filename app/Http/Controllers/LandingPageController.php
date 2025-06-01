@@ -88,8 +88,8 @@ class LandingPageController extends Controller {
 
         if ($request->hasFile('hero_image')) {
             // delete old hero image
-            if ($landingPageSettings->hero_image_url) {
-                $oldPath = str_replace(asset('storage') . '/', '', $landingPageSettings->hero_image_url);
+            if ($landingPageSettings->heroImageUrl()) {
+                $oldPath = str_replace(asset('storage') . '/', '', $landingPageSettings->heroImageUrl());
                 Storage::disk('public')->delete($oldPath);
             }
 

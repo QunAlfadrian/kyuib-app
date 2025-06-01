@@ -20,6 +20,7 @@ class Article extends Model {
     protected $fillable = [
         'title',
         'slug',
+        'hero_image_url',
         'body',
         'project_id',
         'author_id'
