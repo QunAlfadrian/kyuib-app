@@ -12,13 +12,11 @@ class ArticlesTableSeeder extends Seeder {
      * Run the database seeds.
      */
     public function run(): void {
-        $article = Article::factory()->count(7)->create([
-            'project_id' => 1,
-            'author_id' => Project::find(1)->owner()->id()
-        ]);
-        $article = Article::factory()->count(3)->create([
-            'project_id' => 2,
-            'author_id' => Project::find(2)->owner()->id()
-        ]);
+        for ($i = 1; $i <= 10; $i++) {
+            Article::factory()->count(2)->create([
+                'project_id' => $i,
+                'author_id' => Project::find($i)->owner()->id()
+            ]);
+        }
     }
 }

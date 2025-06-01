@@ -45,6 +45,8 @@ Route::group([
     // Landing Page Settings
     Route::post('/landing-pages', [LandingPageController::class, 'store'])->name('landingPages.store');
     Route::put('/landing-pages/{landingPageSettings}', [LandingPageController::class, 'update'])->name('landingPages.update');
+    Route::post('/landing-pages/{landingPageSettings}/featured-articles', [LandingPageController::class, 'updateFeaturedArticles'])->name('landingPages.featuredArticles.update');
+    Route::post('/landing-pages/{landingPageSettings}/featured-projects', [LandingPageController::class, 'updateFeaturedProjects'])->name('landingPages.featuredProjects.update');
 
     // Categories
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
@@ -74,6 +76,8 @@ Route::group([
 ], function () {
     // Landing Page Settings
     Route::get('/landing-pages/{landingPageSettings}', [LandingPageController::class, 'show'])->name('landingPages.show');
+    Route::get('/landing-pages/{landingPageSettings}/featured-articles', [LandingPageController::class, 'indexFeaturedArticles'])->name('landingPages.featuredArticles.index');
+    Route::get('/landing-pages/{landingPageSettings}/featured-projects', [LandingPageController::class, 'indexFeaturedProjects'])->name('landingPages.featuredProjects.index');
 
     // Categories
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');

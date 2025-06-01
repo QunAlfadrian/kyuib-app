@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\LandingPageResource;
+use App\Http\Resources\V1\ArticleRelation;
+use App\Http\Resources\V1\ProjectRelation;
 use Illuminate\Http\Request;
 use App\Services\V1\ImageService;
 use App\Models\LandingPageSettings;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 
 class LandingPageController extends Controller {
@@ -110,6 +113,82 @@ class LandingPageController extends Controller {
         $landingPageSettings->update($data);
 
         return (new LandingPageResource($landingPageSettings))
+            ->response()
+            ->setStatusCode(200);
+    }
+
+    /**
+     * Display the resource of featured articles
+     */
+    public function indexFeaturedProjects(LandingPageSettings $landingPageSettings) {
+        return (ProjectRelation::collection($landingPageSettings->featuredProjects()))
+            ->response()
+            ->setStatusCode(200);
+    }
+
+    /**
+     * Update the featured articles displayed on landing page
+     */
+    public function UpdateFeaturedProjects(Request $request, LandingPageSettings $landingPageSettings) {
+        try {
+            $validated = $request->validate([
+                'projects' => 'required|array|min:1|max:5',
+                'projects.*.id' => 'required|exists:articles,id',
+                'projects.*.position' => 'required|integer|min:1'
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        }
+
+        $syncData = [];
+
+        foreach ($validated['projects'] as $project) {
+            $syncData[$project['id']] = [
+                'position' => $project['position'] ?? null
+            ];
+        }
+
+        $landingPageSettings->projectRelation()->sync($syncData);
+
+        return (ProjectRelation::collection($landingPageSettings->featuredProjects()))
+            ->response()
+            ->setStatusCode(200);
+    }
+
+    /**
+     * Display the resource of featured articles
+     */
+    public function indexFeaturedArticles(LandingPageSettings $landingPageSettings) {
+        return (ArticleRelation::collection($landingPageSettings->featuredArticles()))
+            ->response()
+            ->setStatusCode(200);
+    }
+
+    /**
+     * Update the featured articles displayed on landing page
+     */
+    public function UpdateFeaturedArticles(Request $request, LandingPageSettings $landingPageSettings) {
+        try {
+            $validated = $request->validate([
+                'articles' => 'required|array|min:1|max:5',
+                'articles.*.id' => 'required|exists:articles,id',
+                'articles.*.position' => 'required|integer|min:1'
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        }
+
+        $syncData = [];
+
+        foreach ($validated['articles'] as $article) {
+            $syncData[$article['id']] = [
+                'position' => $article['position'] ?? null
+            ];
+        }
+
+        $landingPageSettings->articleRelation()->sync($syncData);
+
+        return (ArticleRelation::collection($landingPageSettings->featuredArticles()))
             ->response()
             ->setStatusCode(200);
     }

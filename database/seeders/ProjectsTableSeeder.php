@@ -12,8 +12,13 @@ class ProjectsTableSeeder extends Seeder {
      */
     public function run(): void {
         $project = Project::factory()->count(5)->create([
-            'owner_id' => 1,
-            'category_id' => 1
+            'owner_id' => 2,
+            'category_id' => random_int(1, 4)
+        ]);
+
+        $project = Project::factory()->count(5)->create([
+            'owner_id' => 3,
+            'category_id' => random_int(1, 4)
         ]);
     }
 }

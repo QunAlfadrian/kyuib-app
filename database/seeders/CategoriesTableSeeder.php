@@ -13,11 +13,6 @@ class CategoriesTableSeeder extends Seeder {
      */
     public function run(): void {
         $category = Category::create([
-            'name' => 'Game Development',
-            'slug' => Str::slug('Game Development')
-        ]);
-
-        $category = Category::create([
             'name' => 'Web Development',
             'slug' => Str::slug('Web Development')
         ]);
@@ -25,6 +20,16 @@ class CategoriesTableSeeder extends Seeder {
         $category = Category::create([
             'name' => 'Backend Development',
             'slug' => Str::slug('Backend Development')
+        ]);
+
+        $category = Category::create([
+            'name' => 'Frontend Development',
+            'slug' => Str::slug('Backend Development')
+        ]);
+
+        $category = Category::create([
+            'name' => 'Game Development',
+            'slug' => Str::slug('Game Development')
         ]);
     }
 }

@@ -2,11 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\HasFeaturedArticles;
+use App\Traits\HasFeaturedProjects;
+use App\Traits\ModelHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class LandingPageSettings extends Model {
     use HasFactory;
+    use ModelHelpers;
+    use HasFeaturedProjects;
+    use HasFeaturedArticles;
 
     const TABLE = 'landing_page_settings';
 

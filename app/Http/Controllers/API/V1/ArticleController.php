@@ -55,7 +55,7 @@ class ArticleController extends Controller {
             'body' => $request->input('body'),
             'author_id' => $project->owner()->id()
         ]);
-        $article->authorRelation()->associate(Auth::user());
+        $article->authoredBy(Auth::user());
 
         return (new ArticleResource($article))
             ->response()

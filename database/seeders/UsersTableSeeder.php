@@ -25,6 +25,13 @@ class UsersTableSeeder extends Seeder {
         ]);
         $user->createToken('kyuib')->plainTextToken;
 
+        $user = User::create([
+            'name' => 'emi',
+            'email' => 'emi@example.com',
+            'password' => bcrypt('password')
+        ]);
+        $user->createToken('kyuib')->plainTextToken;
+
         // User::factory()->count(5)->create();
     }
 }

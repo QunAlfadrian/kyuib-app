@@ -62,7 +62,7 @@ class ProjectController extends Controller {
             'finish_date' => $request->input('finish_date'),
             'owner_id' => auth()->id()
         ]);
-        $project->ownerRelation()->associate(Auth::user());
+        $project->ownedBy(Auth::user());
 
         return (new ProjectResource($project))
             ->response()
