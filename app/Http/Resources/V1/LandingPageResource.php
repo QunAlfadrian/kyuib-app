@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -26,10 +26,10 @@ class LandingPageResource extends JsonResource {
             ],
             'relationships' => [
                 'related_projects' => [
-
+                    'self' => route('landingPages.featuredProjects.index', $this->id())
                 ],
                 'related_articles' => [
-
+                    'self' => route('landingPages.featuredArticles.index', $this->id())
                 ]
             ],
             'links' => [

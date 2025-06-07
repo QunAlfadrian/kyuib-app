@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LandingPageResource;
-use App\Http\Resources\V1\ArticleRelation;
-use App\Http\Resources\V1\ProjectRelation;
+use Exception;
 use Illuminate\Http\Request;
 use App\Services\V1\ImageService;
 use App\Models\LandingPageSettings;
-use Exception;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\V1\ArticleRelation;
+use App\Http\Resources\V1\FeaturedProject;
+use App\Http\Resources\V1\ProjectRelation;
+use App\Http\Resources\V1\LandingPageResource;
 
 class LandingPageController extends Controller {
     public function __construct(private ImageService $imageService) {
@@ -118,10 +119,10 @@ class LandingPageController extends Controller {
     }
 
     /**
-     * Display the resource of featured articles
+     * Display the resource of featured projects
      */
     public function indexFeaturedProjects(LandingPageSettings $landingPageSettings) {
-        return (ProjectRelation::collection($landingPageSettings->featuredProjects()))
+        return (FeaturedProject::collection($landingPageSettings->featuredProjects()))
             ->response()
             ->setStatusCode(200);
     }
