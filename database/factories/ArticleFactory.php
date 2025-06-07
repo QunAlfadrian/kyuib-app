@@ -22,7 +22,7 @@ class ArticleFactory extends Factory {
             'title' => $title,
             'slug' => Str::slug($title),
             'hero_image_url' => 'https://arkwaifu.cc/api/v1/arts/pic_rogue_2_6/variants/origin/content',
-            'body' => $this->faker->paragraph(),
+            'body' => $this->faker->paragraph(10),
             'project_id' => $attribute['project_id'] ?? 1,
             'author_id' => $attribute['author_id'] ?? 1
         ];

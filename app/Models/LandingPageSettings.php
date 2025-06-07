@@ -23,6 +23,7 @@ class LandingPageSettings extends Model {
         'job_title',
         'hero_image_url',
         'about_me_title',
+        'about_me_image_url',
         'about_me_body',
         'contact_url'
     ];
