@@ -21,6 +21,7 @@ class LandingPageResource extends JsonResource {
                 'job_title' => $this->jobTitle(),
                 'hero_image_url' => $this->heroImageUrl(),
                 'about_me_title' => $this->aboutMeTitle(),
+                'about_me_image_url' => $this->aboutMeImageUrl(),
                 'about_me_body' => $this->aboutMeBody(),
                 'contact_url' => $this->contactUrl()
             ],

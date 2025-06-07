@@ -47,6 +47,10 @@ class LandingPageSettings extends Model {
         return $this->about_me_title;
     }
 
+    public function aboutMeImageUrl(): string {
+        return $this->about_me_image_url;
+    }
+
     public function aboutMeBody(): string {
         return $this->about_me_body;
     }

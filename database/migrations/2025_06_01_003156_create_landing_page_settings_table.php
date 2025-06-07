@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('job_title', 255);
             $table->text('hero_image_url', 2048);
             $table->string('about_me_title', 255);
+            $table->text('about_me_image_url', 2048);
             $table->string('about_me_body', 5048);
             $table->text('contact_url', 2048);
             $table->timestamps();

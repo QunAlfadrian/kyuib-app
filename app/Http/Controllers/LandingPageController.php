@@ -78,6 +78,7 @@ class LandingPageController extends Controller {
             'job_title' => 'bail|required|string|max:255',
             'hero_image' => 'bail|nullable|image|max:5048',
             'about_me_title' => 'bail|required|string|max:255',
+            'about_me_image' => 'bail|nullable|image|max:5048',
             'about_me_body' => 'bail|required|string|max:5048',
             'contact_url' => 'bail|required|string|max:2048'
         ]);
@@ -109,6 +110,27 @@ class LandingPageController extends Controller {
             );
 
             $data['hero_image_url'] = asset(Storage::url($path . $filename));
+        }
+
+        if ($request->hasFile('about_me_image')) {
+            // delete old about me image
+            if ($landingPageSettings->heroImageUrl()) {
+                $oldPath = str_replace(asset('storage') . '/', '', $landingPageSettings->aboutMeImageUrl());
+                Storage::disk('public')->delete($oldPath);
+            }
+
+            $image = $request->file('about_me_image');
+            $filename = 'about-me-image-' . time() . '.webp';
+            $path = 'images/home/';
+
+            $this->imageService->StoreImage(
+                $image,
+                $filename,
+                $path,
+                100
+            );
+
+            $data['about_me_image_url'] = asset(Storage::url($path . $filename));
         }
 
         $landingPageSettings->update($data);
